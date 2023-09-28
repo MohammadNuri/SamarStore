@@ -1,13 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SamarStore.Application.Services.Users.Queries.GetUsers;
 
 namespace EndPoint.Site.Areas.Admin.Controllers
 {
     public class UsersController : Controller
     {
-        [Area("Admin")]
-        public IActionResult Index()
+        private readonly IGetUsersService _getUsersService;
+        public UsersController(IGetUsersService getUsersService)
         {
-            return View();
+            _getUsersService = getUsersService; 
+        }
+
+
+        [Area("Admin")]
+        public IActionResult Index(string searchKey , int page = 1)
+        {
+            return View(_getUsersService.Execute(new RequestGetUserDto
+            {
+                Page = page,
+                SearchKey = searchKey 
+            }));
         }
     }
 }

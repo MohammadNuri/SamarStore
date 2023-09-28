@@ -11,7 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SamarStore.Common\SamarStore.Common.csproj" />
     <ProjectReference Include="..\SamarStore.Domain\SamarStore.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Users\Commands\" />
   </ItemGroup>
 
 </Project>
