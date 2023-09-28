@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SamarStore.Persistence.Context
 {
-    internal class DataBaseContext : DbContext
+    public class DataBaseContext : DbContext
     {
         public DataBaseContext(DbContextOptions opetions) : base (opetions)
         {
