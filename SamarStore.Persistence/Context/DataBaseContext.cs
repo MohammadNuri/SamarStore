@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SamarStore.Application.Interfaces.Context;
 using SamarStore.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SamarStore.Persistence.Context
 {
-    public class DataBaseContext : DbContext
+    public class DataBaseContext : DbContext, IDataBaseContext
     {
         public DataBaseContext(DbContextOptions opetions) : base (opetions)
         {

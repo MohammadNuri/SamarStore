@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using SamarStore.Application.Interfaces.Context;
 using SamarStore.Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataBaseContext>(option =>
 {
