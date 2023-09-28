@@ -8,6 +8,8 @@ using SamarStore.Application.Services.Users.Commands.RemoveUser;
 using SamarStore.Application.Services.Users.Commands.UserStatusChange;
 using SamarStore.Application.Services.Users.Commands.EditUser;
 using SamarStore.Application.Services.Users.Commands.UserLogin;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +24,20 @@ builder.Services.AddScoped<IEditUserService , EditUserService>();
 builder.Services.AddScoped<IUserLoginService, UserLoginService>();  
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataBaseContext>(option =>
-{
-    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+    {
+        option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    });
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    }).AddCookie(options =>
+    {
+        options.LoginPath = new PathString("/");
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(5.0);
+    });
+
 
 var app = builder.Build();
 
@@ -37,11 +50,14 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseAuthentication();    
 
 app.MapControllerRoute(
     name: "default",
