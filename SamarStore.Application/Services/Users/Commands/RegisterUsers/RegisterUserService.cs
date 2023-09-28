@@ -1,4 +1,5 @@
 ﻿using SamarStore.Application.Interfaces.Context;
+using SamarStore.Common;
 using SamarStore.Common.Dto;
 using SamarStore.Domain.Entities.Users;
 using System.Net.Http.Headers;
@@ -65,12 +66,14 @@ namespace SamarStore.Application.Services.Users.Commands.RegisterUsers
                     };
                 }
 
+                var passwordHasher = new PasswordHasher();
+                var hashedPassword = passwordHasher.HashPassword(request.Password);
 
                 User user = new User()
                 {
                     Email = request.Email,
                     FullName = request.FullName,
-                    Password = request.Password, 
+                    Password = hashedPassword, 
                     IsActive = true,
                 };
                 List<UserInRole> userInRoles = new List<UserInRole>();
@@ -114,5 +117,6 @@ namespace SamarStore.Application.Services.Users.Commands.RegisterUsers
             }
         }
         
+
     }
 }
