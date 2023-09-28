@@ -1,6 +1,7 @@
 ﻿using Bugeto_Store.Application.Services.Users.Queries.GetRoles;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SamarStore.Application.Services.Users.Commands.RegisterUsers;
 using SamarStore.Application.Services.Users.Queries.GetUsers;
 
 namespace EndPoint.Site.Areas.Admin.Controllers
@@ -10,10 +11,15 @@ namespace EndPoint.Site.Areas.Admin.Controllers
     {
         private readonly IGetUsersService _getUsersService;
         private readonly IGetRolesService _getRolesService;
-        public UsersController(IGetUsersService getUsersService, IGetRolesService getRolesService)
+        private readonly IRegisterUserService _registerUserService; 
+        public UsersController(
+            IGetUsersService getUsersService,
+            IGetRolesService getRolesService , 
+            IRegisterUserService registerUserService)
         {
             _getUsersService = getUsersService; 
             _getRolesService = getRolesService;
+            _registerUserService = registerUserService; 
         }
 
         public IActionResult Index(string searchKey , int page = 1)
@@ -30,6 +36,25 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         {
             ViewBag.Roles = new SelectList(_getRolesService.Execute().Data , "Id" , "Name");
             return View();  
+        }
+        [HttpPost]
+        public IActionResult Register(string Email,string FullName, long RoleId, string Password, string RePassword)
+        {
+            var result = _registerUserService.Execute(new RequestRegisterUserDto
+            {
+                Email = Email,
+                FullName = FullName,
+                Roles = new List<RolesInRegisterUserDto>()
+                {
+                    new RolesInRegisterUserDto
+                    {
+                        Id = RoleId
+                    }
+                },
+                Password = Password,
+                RePassword = RePassword
+            });
+            return Json(result);
         }
     }
 }
