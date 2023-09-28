@@ -3,6 +3,7 @@ using SamarStore.Application.Services.Users.Queries.GetUsers;
 
 namespace EndPoint.Site.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class UsersController : Controller
     {
         private readonly IGetUsersService _getUsersService;
@@ -12,7 +13,6 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         }
 
 
-        [Area("Admin")]
         public IActionResult Index(string searchKey , int page = 1)
         {
             return View(_getUsersService.Execute(new RequestGetUserDto
@@ -20,6 +20,12 @@ namespace EndPoint.Site.Areas.Admin.Controllers
                 Page = page,
                 SearchKey = searchKey 
             }));
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();  
         }
     }
 }

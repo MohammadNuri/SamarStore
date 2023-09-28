@@ -1,5 +1,7 @@
+using Bugeto_Store.Application.Services.Users.Queries.GetRoles;
 using Microsoft.EntityFrameworkCore;
 using SamarStore.Application.Interfaces.Context;
+using SamarStore.Application.Services.Users.Commands.RegisterUsers;
 using SamarStore.Application.Services.Users.Queries.GetUsers;
 using SamarStore.Persistence.Context;
 
@@ -8,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
 builder.Services.AddScoped<IGetUsersService, GetUsersService>();
+builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
+builder.Services.AddScoped<IGetRolesService, GetRolesService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataBaseContext>(option =>
 {
