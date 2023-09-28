@@ -46,7 +46,7 @@ namespace SamarStore.Application.Services.Users.Commands.UserLogin
 
                     },
                     IsSuccess = false,
-                    Message = "کاربری با این ایمیل در سایت فروشگاه باگتو ثبت نام نکرده است",
+                    Message = "نام کاربری یا رمز عبور اشتباه است!",
                 };
             }
 
@@ -61,7 +61,7 @@ namespace SamarStore.Application.Services.Users.Commands.UserLogin
 
                     },
                     IsSuccess = false,
-                    Message = "رمز وارد شده اشتباه است!",
+                    Message = "نام کاربری یا رمز عبور اشتباه است!",
                 };
             }
 
