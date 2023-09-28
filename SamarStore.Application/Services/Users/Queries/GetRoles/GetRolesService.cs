@@ -2,7 +2,7 @@
 using SamarStore.Application.Services.Users.Queries.GetRoles;
 using SamarStore.Common.Dto;
 
-namespace Bugeto_Store.Application.Services.Users.Queries.GetRoles
+namespace SamarStore.Application.Services.Users.Queries.GetRoles
 {
     public class GetRolesService : IGetRolesService
     {
