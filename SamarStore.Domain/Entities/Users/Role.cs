@@ -1,6 +1,8 @@
-﻿namespace SamarStore.Domain.Entities.Users
+﻿using SamarStore.Domain.Entities.Commons;
+
+namespace SamarStore.Domain.Entities.Users
 {
-    public class Role
+    public class Role : BaseEntity
     {
         public long Id { get; set; }    
         public string Name { get; set; }    

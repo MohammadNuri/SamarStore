@@ -108,7 +108,7 @@ namespace SamarStore.Application.Services.Users.Commands.RegisterUsers
                         UserId = 0,
                     },
                     IsSuccess = false,
-                    Message = "ثبت نام انجام نشد!"
+                    Message = "ایمیل تکراری می باشد"
                 };
             }
         }

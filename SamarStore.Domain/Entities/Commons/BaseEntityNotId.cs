@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SamarStore.Domain.Entities.Commons
+﻿namespace SamarStore.Domain.Entities.Commons
 {
     public abstract class BaseEntityNotId  
     {
