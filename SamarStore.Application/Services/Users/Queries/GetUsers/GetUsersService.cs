@@ -25,6 +25,8 @@ namespace SamarStore.Application.Services.Users.Queries.GetUsers
                 Email = p.Email,    
                 FullName = p.FullName,
                 Id = p.Id,
+                IsActive = p.IsActive,
+                
             }).ToList();
 
             return new ResultGetUserDto

@@ -5,6 +5,8 @@ using SamarStore.Application.Services.Users.Commands.RegisterUsers;
 using SamarStore.Application.Services.Users.Queries.GetUsers;
 using SamarStore.Persistence.Context;
 using SamarStore.Application.Services.Users.Commands.RemoveUser;
+using SamarStore.Application.Services.Users.Commands.UserStatusChange;
+using SamarStore.Application.Services.Users.Commands.EditUser;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,8 @@ builder.Services.AddScoped<IGetUsersService, GetUsersService>();
 builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
 builder.Services.AddScoped<IGetRolesService, GetRolesService>();
 builder.Services.AddScoped<IRemoveUserService, RemoveUserService>();    
+builder.Services.AddScoped<IUserStatusChangeService, UserStatusChangeService>(); 
+builder.Services.AddScoped<IEditUserService , EditUserService>();   
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataBaseContext>(option =>
 {

@@ -30,6 +30,7 @@
                                                     <tr role="row">
                                                         <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="نام: activate to sort column descending" style="width: 222px;">نام</th>
                                                         <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="ایمیل: activate to sort column ascending" style="width: 401px;">ایمیل</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="وضعیت کاربر: activate to sort column ascending" style="width: 401px;">وضعیت کاربر</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -39,10 +40,27 @@
                                                         <tr role="row" class="odd">
                                                             <td class="sorting_1">@item.FullName</td>
                                                             <td>@item.Email</td>
+                                                            @if (item.IsActive)
+                                                            {
+                                                                <td>فعال</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>غیر فعال</td>
+                                                            }
+
                                                             <td>
-                                                                <button class="btn btn-info">ویرایش</button>
+                                                                <button class="btn btn-info" onclick="ShowModalEditUser('@item.Id' , '@item.FullName' , '@item.Email')">ویرایش</button>
                                                                 <button class="btn btn-danger" onclick="DeleteUser('@item.Id')">حذف</button>
-                                                                <button class="btn btn-warning">غیر فعال</button>
+                                                                @if (item.IsActive)
+                                                                {
+                                                                    <button class="btn btn-warning" onclick="UserStatusChange('@item.Id')"> غیر فعال کردن</button>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <button class="btn btn-success" onclick="UserStatusChange('@item.Id')">  فعال کردن کاربر </button>
+                                                                }
+                                                                
                                                             </td>
                                                         </tr>
                                                     }
@@ -72,8 +90,6 @@
     <script src="~/Sweetalert2/sweetalert2.min.js"></script>
 
     <script>
-        
-
         function DeleteUser(UserId) {
             swal.fire({
                 title: 'حذف کاربر',
@@ -126,5 +142,148 @@
             })
         }
 
+        function UserStatusChange(UserId) {
+            swal.fire({
+                title: 'تغییر وضعیت کاربر',
+                text: "کاربر گرامی از تغییر وضعیت کاربر مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'بله ، تغییر وضعیت انجام شود',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.value) {
+
+                    var postData = {
+                        'UserId': UserId,
+                    };
+
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "UserStatusChange",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            }
+                            else {
+
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+
+                }
+            })
+        }
+        function EditUser() {
+
+            var userId = $("#Edit_UserId").val();
+            var fullName = $("#Edit_Fullname").val();
+            var email = $("#Edit_Email").val();
+
+            var postData = {
+                'UserId': userId,
+                'FullName': fullName,
+                'Email' : email,
+            };
+
+
+            $.ajax({
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                type: "POST",
+                url: "EditUser",
+                data: postData,
+                success: function (data) {
+                    if (data.isSuccess == true) {
+                        swal.fire(
+                            'موفق!',
+                            data.message,
+                            'success'
+                        ).then(function (isConfirm) {
+                            location.reload();
+                        });
+                    }
+                    else {
+                        swal.fire(
+                            'هشدار!',
+                            data.message,
+                            'warning'
+                        );
+                    }
+                },
+                error: function (request, status, error) {
+                    alert(request.responseText);
+                }
+            });
+
+            $('#EditUser').modal('hide');
+
+        }
+
+
+        function ShowModalEditUser(UserId, fullName, email) {
+
+            $('#Edit_Email').val(email)
+            $('#Edit_Fullname').val(fullName)
+            $('#Edit_UserId').val(UserId)
+            $('#EditUser').modal('show');
+
+        }
+
+
  </script>
  }
+
+
+@section Modals
+    {
+    <!-- Modal Edit User -->
+    <div class="modal fade" id="EditUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">ویرایش کاربر</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
+                        <fieldset class="form-group">
+                            <input type="hidden" id="Edit_UserId" />
+                            <label for="basicInput">نام و نام خانوادگی:</label>
+                            <input type="text" class="form-control" id="Edit_Fullname">
+                            <br />
+                            <label for="basicInput">ایمیل:</label>
+                            <input type="text" class="form-control" id="Edit_Email">
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary" data-dismiss="modal">بستن</a>
+                    <a class="btn btn-primary" onclick="EditUser()">اعمال تغییرات</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

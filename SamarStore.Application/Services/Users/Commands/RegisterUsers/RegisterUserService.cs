@@ -70,7 +70,8 @@ namespace SamarStore.Application.Services.Users.Commands.RegisterUsers
                 {
                     Email = request.Email,
                     FullName = request.FullName,
-                    Password = request.Password,    
+                    Password = request.Password, 
+                    IsActive = true,
                 };
                 List<UserInRole> userInRoles = new List<UserInRole>();
                 foreach (var item in request.Roles)
