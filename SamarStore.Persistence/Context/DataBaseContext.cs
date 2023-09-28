@@ -14,9 +14,9 @@ namespace SamarStore.Persistence.Context
         {
         }
 
-        public DbSet<User> Users { get; set; }  
+        public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<UserInRole> UsersInRoles { get; set; } 
+        public DbSet<UserInRole> UsersInRoles { get; set; }
 
     }
 }
