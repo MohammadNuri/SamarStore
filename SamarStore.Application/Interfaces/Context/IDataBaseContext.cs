@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SamarStore.Domain.Entities.Products;
 using SamarStore.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace SamarStore.Application.Interfaces.Context
         DbSet<User> Users { get; set; }
         DbSet<Role> Roles { get; set; }
         DbSet<UserInRole> UsersInRoles { get; set; }
+        public DbSet<Category> Categories { get; set; }
+
 
         int SaveChanges(bool acceptAllChangesOnSuccess);
         int SaveChanges();

@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SamarStore.Application.Interfaces.Context;
 using SamarStore.Common.Roles;
+using SamarStore.Domain.Entities.Products;
 using SamarStore.Domain.Entities.Users;
+using SamarStore.Persistence.Context.EntityConfigurations;
 
 namespace SamarStore.Persistence.Context
 {
@@ -14,15 +16,21 @@ namespace SamarStore.Persistence.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserInRole> UsersInRoles { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = nameof(UserRoles.Admin) });
-            modelBuilder.Entity<Role>().HasData(new Role { Id = 2, Name = nameof(UserRoles.Operator) });
-            modelBuilder.Entity<Role>().HasData(new Role { Id = 3, Name = nameof(UserRoles.Customer) });
-            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
-            modelBuilder.Entity<User>().HasQueryFilter(p => !p.IsRemoved);
+
+            //--Seed Data
+            AddData.SeedData(modelBuilder);
+
+            //--Apply Index On Email
+            //--Emails cant be Duplicate 
+            ApplyIndex.HasIndex(modelBuilder);  
+            
+            //--Not Showing Deleted Data
+            QueryFilter.ApplyQueryFilter(modelBuilder); 
         }
 
     }
