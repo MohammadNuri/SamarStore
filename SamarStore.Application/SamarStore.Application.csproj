@@ -15,4 +15,8 @@
     <ProjectReference Include="..\SamarStore.Domain\SamarStore.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Product\Queries\" />
+  </ItemGroup>
+
 </Project>

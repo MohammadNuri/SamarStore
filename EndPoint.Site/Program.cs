@@ -9,12 +9,14 @@ using SamarStore.Application.Services.Users.Commands.UserStatusChange;
 using SamarStore.Application.Services.Users.Commands.EditUser;
 using SamarStore.Application.Services.Users.Commands.UserLogin;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Extensions.Options;
+using SamarStore.Application.Interfaces.FacadPatterns;
+using SamarStore.Application.Services.Product.FacadPattern;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
+//--UserServices
 builder.Services.AddScoped<IGetUsersService, GetUsersService>();
 builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
 builder.Services.AddScoped<IGetRolesService, GetRolesService>();
@@ -22,6 +24,9 @@ builder.Services.AddScoped<IRemoveUserService, RemoveUserService>();
 builder.Services.AddScoped<IUserStatusChangeService, UserStatusChangeService>(); 
 builder.Services.AddScoped<IEditUserService , EditUserService>();   
 builder.Services.AddScoped<IUserLoginService, UserLoginService>();  
+//--FacadInject
+builder.Services.AddScoped<IProductFacad, ProductFacad>();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataBaseContext>(option =>
     {
