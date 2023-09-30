@@ -1,4 +1,5 @@
 ﻿using SamarStore.Application.Services.Product.Commands.AddNewCategory;
+using SamarStore.Application.Services.Product.Queries.GetCategories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace SamarStore.Application.Interfaces.FacadPatterns
 {
     public interface IProductFacad
     {
-        AddNewCategoryService AddNewCategoryService { get; }
+        IAddNewCategoryService AddNewCategoryService { get; }
+        IGetCategoryService GetCategoryService { get; } 
     }
 }
