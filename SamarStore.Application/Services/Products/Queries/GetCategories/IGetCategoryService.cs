@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SamarStore.Application.Services.Product.Queries.GetCategories
+namespace SamarStore.Application.Services.Products.Queries.GetCategories
 {
     public interface IGetCategoryService
     {

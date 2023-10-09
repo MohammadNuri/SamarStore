@@ -1,4 +1,4 @@
-﻿namespace SamarStore.Application.Services.Product.Queries.GetCategories
+﻿namespace SamarStore.Application.Services.Products.Queries.GetCategories
 {
     public class CategoriesDto 
     {

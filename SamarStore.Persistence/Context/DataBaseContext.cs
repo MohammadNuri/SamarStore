@@ -12,12 +12,13 @@ namespace SamarStore.Persistence.Context
         public DataBaseContext(DbContextOptions opetions) : base (opetions)
         {
         }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<UserInRole> UsersInRoles { get; set; }
         public DbSet<Category> Categories { get; set; }
-
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImages> ProductImages { get; set; }
+        public DbSet<ProductFeatures> ProductFeatures { get; set; }
+        public DbSet<UserInRole> UserInRoles { get; set; }  
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

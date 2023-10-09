@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SamarStore.Persistence.Context;
 
@@ -11,9 +12,11 @@ using SamarStore.Persistence.Context;
 namespace SamarStore.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231009113106__fix_product")]
+    partial class _fix_product
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,21 +214,21 @@ namespace SamarStore.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            InsertTime = new DateTime(2023, 10, 9, 15, 13, 51, 600, DateTimeKind.Local).AddTicks(2074),
+                            InsertTime = new DateTime(2023, 10, 9, 15, 1, 6, 310, DateTimeKind.Local).AddTicks(3578),
                             IsRemoved = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            InsertTime = new DateTime(2023, 10, 9, 15, 13, 51, 600, DateTimeKind.Local).AddTicks(2145),
+                            InsertTime = new DateTime(2023, 10, 9, 15, 1, 6, 310, DateTimeKind.Local).AddTicks(3617),
                             IsRemoved = false,
                             Name = "Operator"
                         },
                         new
                         {
                             Id = 3L,
-                            InsertTime = new DateTime(2023, 10, 9, 15, 13, 51, 600, DateTimeKind.Local).AddTicks(2162),
+                            InsertTime = new DateTime(2023, 10, 9, 15, 1, 6, 310, DateTimeKind.Local).AddTicks(3626),
                             IsRemoved = false,
                             Name = "Customer"
                         });
@@ -321,7 +324,7 @@ namespace SamarStore.Persistence.Migrations
             modelBuilder.Entity("SamarStore.Domain.Entities.Products.Product", b =>
                 {
                     b.HasOne("SamarStore.Domain.Entities.Products.Category", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -372,6 +375,8 @@ namespace SamarStore.Persistence.Migrations
 
             modelBuilder.Entity("SamarStore.Domain.Entities.Products.Category", b =>
                 {
+                    b.Navigation("Products");
+
                     b.Navigation("SubCategories");
                 });
 

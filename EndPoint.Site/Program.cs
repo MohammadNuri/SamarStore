@@ -10,7 +10,9 @@ using SamarStore.Application.Services.Users.Commands.EditUser;
 using SamarStore.Application.Services.Users.Commands.UserLogin;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SamarStore.Application.Interfaces.FacadPatterns;
-using SamarStore.Application.Services.Product.FacadPattern;
+using SamarStore.Application.Services.Products.FacadPattern;
+using Microsoft.Extensions.Hosting; // IHostEnvironment
+using Microsoft.AspNetCore.Hosting; // IWebHostEnvironment : IHostEnvironment
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,7 +44,6 @@ builder.Services.AddAuthentication(options =>
         options.LoginPath = new PathString("/");
         options.ExpireTimeSpan = TimeSpan.FromMinutes(5.0);
     });
-
 
 var app = builder.Build();
 

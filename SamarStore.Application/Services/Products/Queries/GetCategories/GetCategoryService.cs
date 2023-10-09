@@ -2,7 +2,7 @@
 using SamarStore.Application.Interfaces.Context;
 using SamarStore.Common.Dto;
 
-namespace SamarStore.Application.Services.Product.Queries.GetCategories
+namespace SamarStore.Application.Services.Products.Queries.GetCategories
 {
     public class GetCategoryService : IGetCategoryService
     {

@@ -2,7 +2,7 @@
 using SamarStore.Common.Dto;
 using SamarStore.Domain.Entities.Products;
 
-namespace SamarStore.Application.Services.Product.Commands.AddNewCategory
+namespace SamarStore.Application.Services.Products.Commands.AddNewCategory
 {
     public class AddNewCategoryService : IAddNewCategoryService
     {

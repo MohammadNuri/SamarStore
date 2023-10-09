@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SamarStore.Application.Services.Product.Commands.AddNewCategory
+namespace SamarStore.Application.Services.Products.Commands.AddNewCategory
 {
     public interface IAddNewCategoryService
     {
