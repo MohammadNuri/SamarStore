@@ -9,12 +9,10 @@ namespace SamarStore.Application.Services.Products.Commands.AddNewProduct;
 public class AddNewProductService : IAddNewProductService
 {
     private readonly IDataBaseContext _context;
-    private readonly IHostingEnvironment _environment;
 
-    public AddNewProductService(IDataBaseContext context, IHostingEnvironment hostingEnvironment)
+    public AddNewProductService(IDataBaseContext context)
     {
         _context = context;
-        _environment = hostingEnvironment;
     }
     public ResultDto Execute(RequestAddNewProductDto request)
     {

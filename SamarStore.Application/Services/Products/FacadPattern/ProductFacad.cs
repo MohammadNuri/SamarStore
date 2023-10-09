@@ -14,11 +14,9 @@ namespace SamarStore.Application.Services.Products.FacadPattern
     {
         //--Inject DataBase
         private readonly IDataBaseContext _context;
-        private readonly IHostingEnvironment _environment;
-        public ProductFacad(IDataBaseContext context, IHostingEnvironment hostingEnvironment)
+        public ProductFacad(IDataBaseContext context)
         {
             _context = context;
-            hostingEnvironment = _environment;
         }
 
         //--Inject AddNewCategoryService
@@ -42,12 +40,11 @@ namespace SamarStore.Application.Services.Products.FacadPattern
         }
 
         private AddNewProductService _addNewProduct;
-
         public AddNewProductService AddNewProductService
         {
             get
             {
-                return _addNewProduct = _addNewProduct ?? new AddNewProductService(_context, _environment);
+                return _addNewProduct = _addNewProduct ?? new AddNewProductService(_context);
             }
         }
 

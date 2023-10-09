@@ -28,6 +28,8 @@ builder.Services.AddScoped<IEditUserService , EditUserService>();
 builder.Services.AddScoped<IUserLoginService, UserLoginService>();  
 //--FacadInject
 builder.Services.AddScoped<IProductFacad, ProductFacad>();
+builder.Services.AddScoped<IProductFacadForSite, ProductFacadForSite>();
+
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataBaseContext>(option =>
