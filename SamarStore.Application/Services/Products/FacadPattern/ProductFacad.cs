@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using SamarStore.Application.Services.Products.Commands.AddNewProduct;
 using SamarStore.Application.Services.Products.Queries.GetAllCategories;
 using SamarStore.Application.Services.Products.Queries.GetProductForAdmin;
+using SamarStore.Application.Services.Products.Queries.GetProductDetailForAdmin;
 
 namespace SamarStore.Application.Services.Products.FacadPattern
 {
@@ -65,6 +66,15 @@ namespace SamarStore.Application.Services.Products.FacadPattern
             get
             {
                 return _getProductForAdmin = _getProductForAdmin ?? new GetProductForAdminService(_context);    
+            }
+        }
+        private IGetProductDetailForAdminService _getProductDetailForAdmin;
+
+        public IGetProductDetailForAdminService GetProductDetailForAdminService
+        {
+            get
+            {
+                return _getProductDetailForAdmin = _getProductDetailForAdmin ?? new GetProductDetailForAdminService(_context);  
             }
         }
     }

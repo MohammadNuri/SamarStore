@@ -1,12 +1,8 @@
 ﻿using SamarStore.Application.Services.Products.Commands.AddNewCategory;
 using SamarStore.Application.Services.Products.Commands.AddNewProduct;
 using SamarStore.Application.Services.Products.Queries.GetCategories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SamarStore.Application.Services.Products.Queries.GetAllCategories;
+using SamarStore.Application.Services.Products.Queries.GetProductDetailForAdmin;
 using SamarStore.Application.Services.Products.Queries.GetProductForAdmin;
 
 namespace SamarStore.Application.Interfaces.FacadPatterns
@@ -21,5 +17,6 @@ namespace SamarStore.Application.Interfaces.FacadPatterns
         //Getting List Of Products 
         //</summary>
         IGetProductForAdminService GetProductForAdminService { get; }
+        IGetProductDetailForAdminService GetProductDetailForAdminService { get; }   
     }
 }

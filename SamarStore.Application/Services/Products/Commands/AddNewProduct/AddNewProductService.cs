@@ -127,9 +127,13 @@ public class AddNewProductService : IAddNewProductService
                 file.CopyTo(fileStream);
             }
 
+            var relativePath = filePath.Replace(Environment.CurrentDirectory, string.Empty)
+                .Replace("wwwroot/", string.Empty)
+                .TrimStart(Path.DirectorySeparatorChar);
+
             return new UploadDto
             {
-                FileNameAddress = filePath,
+                FileNameAddress = relativePath,
                 Status = true
             };
         }

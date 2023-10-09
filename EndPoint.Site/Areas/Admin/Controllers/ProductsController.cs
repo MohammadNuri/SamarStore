@@ -5,41 +5,46 @@ using SamarStore.Application.Services.Products.Commands.AddNewProduct;
 
 namespace EndPoint.Site.Areas.Admin.Controllers
 {
-        [Area("Admin")]
-        public class ProductsController : Controller
+    [Area("Admin")]
+    public class ProductsController : Controller
+    {
+
+        private readonly IProductFacad _productFacad;
+
+        public ProductsController(IProductFacad productFacad)
         {
+            _productFacad = productFacad;
+        }
+        public IActionResult Index(int page = 1, int pageSize = 20)
+        {
+            return View(_productFacad.GetProductForAdminService.Execute(page, pageSize).Data);
+        }
 
-            private readonly IProductFacad _productFacad;
+        public IActionResult Detail(long Id)
+        {
+            return View(_productFacad.GetProductDetailForAdminService.Execute(Id).Data);
+        }
 
-            public ProductsController(IProductFacad productFacad)
-            {
-                _productFacad = productFacad;
-            }
-            public IActionResult Index()
-            {
-                return View();
-            }
+        [HttpGet]
+        public IActionResult AddNewProduct()
+        {
+            ViewBag.Categories = new SelectList(_productFacad.GetAllCategoriesService.Execute().Data, "Id", "Name");
+            return View();
+        }
 
-            [HttpGet]
-            public IActionResult AddNewProduct()
+        [HttpPost]
+        public IActionResult AddNewProduct(RequestAddNewProductDto request, List<AddNewProduct_Features> Features)
+        {
+            List<IFormFile> images = new List<IFormFile>();
+            for (int i = 0; i < Request.Form.Files.Count; i++)
             {
-                ViewBag.Categories = new SelectList(_productFacad.GetAllCategoriesService.Execute().Data, "Id", "Name");
-                return View();
+                var file = Request.Form.Files[i];
+                images.Add(file);
             }
-
-            [HttpPost]
-            public IActionResult AddNewProduct(RequestAddNewProductDto request, List<AddNewProduct_Features> Features)
-            {
-                List<IFormFile> images = new List<IFormFile>();
-                for (int i = 0; i < Request.Form.Files.Count; i++)
-                {
-                    var file = Request.Form.Files[i];
-                    images.Add(file);
-                }
-                request.Images = images;
-                request.Features = Features;
-                return Json(_productFacad.AddNewProductService.Execute(request));
-            }
+            request.Images = images;
+            request.Features = Features;
+            return Json(_productFacad.AddNewProductService.Execute(request));
         }
     }
+}
 
