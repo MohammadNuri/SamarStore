@@ -7,18 +7,24 @@ namespace EndPoint.Site.Controllers
 	{
 		private IProductFacadForSite _productFacadForSite;
 
-        public ProductsController(IProductFacadForSite productFacadForSite)
-        {
-            _productFacadForSite = productFacadForSite;	
-        }
-		public IActionResult Index(int page = 1)
+		public ProductsController(IProductFacadForSite productFacadForSite)
 		{
-			return View(_productFacadForSite.GetProductForSiteService.Execute(page).Data);
+			_productFacadForSite = productFacadForSite;
 		}
+		public IActionResult Index(string? searchKey,long? catId, int page = 1)
+		{
+            if (string.IsNullOrEmpty(searchKey) || string.IsNullOrWhiteSpace(searchKey))
+            {
+                return View(_productFacadForSite.GetProductForSiteService.Execute(searchKey, catId, page).Data);
+            }
 
-        public IActionResult Detail(long id)
-        {
-            return View(_productFacadForSite.GetProductDetailForSiteService.Execute(id).Data);
+            searchKey = searchKey.Trim();
+            return View(_productFacadForSite.GetProductForSiteService.Execute(searchKey, catId, page).Data);
         }
+        
+		public IActionResult Detail(long id)
+		{
+			return View(_productFacadForSite.GetProductDetailForSiteService.Execute(id).Data);
+		}
 	}
 }

@@ -1,0 +1,26 @@
+﻿@using SamarStore.Application.Services.Common.Queries.GetCategories;
+@model List<CategoriesDto>;
+@{
+    Layout = null;
+}
+
+
+<form asp-action="Index" asp-controller="Products" class="form-search">
+    <input type="search" required oninvalid="this.setCustomValidity('لطفا عبارت جستجو را وارد کنید')" oninput="this.setCustomValidity('')" class="header-search-input" name="searchKey" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
+    <div class="action-btns">
+        <button class="btn btn-search" type="submit">
+            <i class="fa fa-search"></i>
+        </button>
+        <div class="search-filter">
+            <div class="form-ui">
+                <div class="custom-select-ui">
+                    <select class="right" name="CatId" asp-items="@(new SelectList(Model,"CatId","CategoryName"))">
+                        <option>
+                            همه دسته ها
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

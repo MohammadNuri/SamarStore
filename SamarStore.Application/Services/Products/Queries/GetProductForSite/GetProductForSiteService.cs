@@ -13,12 +13,23 @@ public class GetProductForSiteService : IGetProductForSiteService
     {
         _context = dataBaseContext;
     }
-    public ResultDto<ResultProductForSiteDto> Execute(int page)
+    public ResultDto<ResultProductForSiteDto> Execute(string? searchKey, long? catId, int page)
     {
         int totalRow = 0;
-        var products = _context.Products
-            .Include(p => p.ProductImages)
-            .ToPaged(page, 10, out totalRow);
+        var productQuery = _context.Products
+            .Include(p => p.ProductImages).AsQueryable();
+
+          if(catId != null)
+        {
+			productQuery = productQuery.Where(p => p.CategoryId == catId || p.Category.ParentCategoryId == catId).AsQueryable();    
+
+		}
+        if (!string.IsNullOrEmpty(searchKey))
+        {
+            productQuery = productQuery.Where(p => p.Name.Contains(searchKey) || p.Brand.Contains(searchKey)).AsQueryable();
+        }
+
+          var product = productQuery.ToPaged(page, 10, out totalRow);
 
         Random rd = new Random();
 
@@ -27,7 +38,7 @@ public class GetProductForSiteService : IGetProductForSiteService
             Data = new ResultProductForSiteDto
             {
                 TotalRow = totalRow,
-                Products = products.Select(p => new ProductForSiteDto
+                Products = product.Select(p => new ProductForSiteDto
                 {
                     Id = p.Id,
                     Star = rd.Next(1, 5),

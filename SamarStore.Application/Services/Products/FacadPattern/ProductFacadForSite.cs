@@ -1,5 +1,7 @@
 ﻿using SamarStore.Application.Interfaces.Context;
 using SamarStore.Application.Interfaces.FacadPatterns;
+using SamarStore.Application.Services.Common.Queries.GetCategories;
+using SamarStore.Application.Services.Common.Queries.GetMenuItem;
 using SamarStore.Application.Services.Products.Queries.GetProductDetailForSite;
 using SamarStore.Application.Services.Products.Queries.GetProductForSite;
 
@@ -31,5 +33,23 @@ namespace SamarStore.Application.Services.Products.FacadPattern
 		        return _getProductDetailForSiteService = _getProductDetailForSiteService ?? new GetProductDetailForSiteService(_context);
 			}
         }
-    }
+
+        private IGetMenuItemService _getMenuItemService;    
+        public IGetMenuItemService GetMenuItemService
+        {
+            get
+            {
+                return _getMenuItemService = _getMenuItemService ?? new GetMenuItemService(_context);
+            }
+        }
+
+        private IGetCategoriesService _getCategoriesService;    
+		public IGetCategoriesService GetCategoriesService
+        {
+            get
+            {
+				return _getCategoriesService = _getCategoriesService ?? new GetCategoriesService(_context);
+			}
+        }
+	}
 }

@@ -10,6 +10,6 @@ namespace SamarStore.Application.Services.Products.Queries.GetProductForSite
 {
     public interface IGetProductForSiteService
     {
-        ResultDto<ResultProductForSiteDto> Execute(int page);
+        ResultDto<ResultProductForSiteDto> Execute(string? searchKey, long? catId , int page);
     }
 }

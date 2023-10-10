@@ -7,6 +7,7 @@ using SamarStore.Application.Services.Products.Commands.AddNewProduct;
 using SamarStore.Application.Services.Products.Queries.GetAllCategories;
 using SamarStore.Application.Services.Products.Queries.GetProductForAdmin;
 using SamarStore.Application.Services.Products.Queries.GetProductDetailForAdmin;
+using SamarStore.Application.Services.Products.Commands.RemoveCategory;
 
 namespace SamarStore.Application.Services.Products.FacadPattern
 {
@@ -72,6 +73,14 @@ namespace SamarStore.Application.Services.Products.FacadPattern
             get
             {
                 return _getProductDetailForAdmin = _getProductDetailForAdmin ?? new GetProductDetailForAdminService(_context);  
+            }
+        }
+        private IRemoveCategoryService _removeCategoryService;
+        public IRemoveCategoryService RemoveCategoryService
+        {
+            get
+            {
+                return _removeCategoryService = _removeCategoryService ?? new RemoveCategoryService(_context);
             }
         }
     }
