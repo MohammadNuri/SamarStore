@@ -5,7 +5,7 @@
 }
 
 
-<form asp-action="Index" asp-controller="Products" class="form-search">
+<form asp-action="Index" asp-controller="Products" class="form-search" method="get">
     <input type="search" required oninvalid="this.setCustomValidity('لطفا عبارت جستجو را وارد کنید')" oninput="this.setCustomValidity('')" class="header-search-input" name="searchKey" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
     <div class="action-btns">
         <button class="btn btn-search" type="submit">

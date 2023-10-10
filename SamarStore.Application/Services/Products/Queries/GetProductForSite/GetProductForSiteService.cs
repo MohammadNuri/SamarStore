@@ -13,7 +13,7 @@ public class GetProductForSiteService : IGetProductForSiteService
     {
         _context = dataBaseContext;
     }
-    public ResultDto<ResultProductForSiteDto> Execute(string? searchKey, long? catId, int page)
+    public ResultDto<ResultProductForSiteDto> Execute(string? searchKey, long? catId, int page, int pageSize)
     {
         int totalRow = 0;
         var productQuery = _context.Products
@@ -29,7 +29,7 @@ public class GetProductForSiteService : IGetProductForSiteService
             productQuery = productQuery.Where(p => p.Name.Contains(searchKey) || p.Brand.Contains(searchKey)).AsQueryable();
         }
 
-          var product = productQuery.ToPaged(page, 10, out totalRow);
+          var product = productQuery.ToPaged(page, pageSize, out totalRow);
 
         Random rd = new Random();
 
