@@ -1,0 +1,30 @@
+﻿@using SamarStore.Application.Services.Common.Queries.GetMenuItem;
+@model List<MenuItemDto>
+
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+@foreach (var item in Model)
+{
+	<ul>
+		<li class="has-sub">
+			<a href="~/products/index?CatId=@item.CatId" class="category-level-2">@item.Name @(item.Child.Count() > 0 ? "+" : "") </a>
+
+			@if (item.Child.Count() > 0)
+			{
+				@foreach (var itemChild in item.Child)
+				{
+					<ul>
+						<li>
+							<a href="~/products/index?CatId=@itemChild.CatId" class="category-level-3">@itemChild.Name</a>
+						</li>
+					</ul>
+				}
+			}
+		</li>
+	</ul>
+}

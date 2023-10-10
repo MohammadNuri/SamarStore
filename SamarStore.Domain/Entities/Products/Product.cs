@@ -15,6 +15,7 @@ namespace SamarStore.Domain.Entities.Products
         public int Price { get; set; }
         public int Inventory { get; set; }
         public bool Displayed { get; set; }
+        public int ViewCount { get; set; }
 
         public virtual Category Category { get; set; } // Ertebat Chand be 1 ba Category 
         public long CategoryId { get; set; }

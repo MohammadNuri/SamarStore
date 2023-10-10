@@ -13,7 +13,7 @@ public class GetProductForSiteService : IGetProductForSiteService
     {
         _context = dataBaseContext;
     }
-    public ResultDto<ResultProductForSiteDto> Execute(string? searchKey, long? catId, int page, int pageSize)
+    public ResultDto<ResultProductForSiteDto> Execute(Ordering ordering,string? searchKey, long? catId, int page, int pageSize)
     {
         int totalRow = 0;
         var productQuery = _context.Products
@@ -29,7 +29,32 @@ public class GetProductForSiteService : IGetProductForSiteService
             productQuery = productQuery.Where(p => p.Name.Contains(searchKey) || p.Brand.Contains(searchKey)).AsQueryable();
         }
 
-          var product = productQuery.ToPaged(page, pageSize, out totalRow);
+		switch (ordering)
+		{
+			case Ordering.NotOrder:
+				productQuery = productQuery.OrderByDescending(p => p.Id).AsQueryable();   
+				break;
+			case Ordering.MostVisited:
+				productQuery = productQuery.OrderByDescending(p => p.ViewCount).AsQueryable();
+				break;
+			case Ordering.Bestselling:
+				productQuery = productQuery.OrderByDescending(p => p.Id).AsQueryable();
+				break;
+			case Ordering.MostPopular:
+				productQuery = productQuery.OrderByDescending(p => p.ViewCount).AsQueryable();
+				break;
+			case Ordering.theNewest:
+				productQuery = productQuery.OrderByDescending(p => p.Id).AsQueryable();
+				break;
+			case Ordering.Cheapest:
+				productQuery = productQuery.OrderBy(p => p.Price).AsQueryable();
+				break;
+			case Ordering.theMostExpensive:
+				productQuery = productQuery.OrderByDescending(p => p.Price).AsQueryable();
+				break;
+		}
+
+		var product = productQuery.ToPaged(page, pageSize, out totalRow);
 
         Random rd = new Random();
 
@@ -49,6 +74,6 @@ public class GetProductForSiteService : IGetProductForSiteService
             },
             IsSuccess = true,
         };
-        
-    }
+
+	}
 }

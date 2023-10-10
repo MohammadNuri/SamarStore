@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SamarStore.Application.Interfaces.FacadPatterns;
+using SamarStore.Application.Services.Products.Queries.GetProductForSite;
 using System.Drawing.Printing;
 
 namespace EndPoint.Site.Controllers
@@ -12,16 +13,16 @@ namespace EndPoint.Site.Controllers
 		{
 			_productFacadForSite = productFacadForSite;
 		}
-		public IActionResult Index(string? searchKey, long? catId, int page = 1, int pageSize = 20)
+		public IActionResult Index(Ordering ordering, string? searchKey, long? catId, int page = 1, int pageSize = 20)
 		{
-            if (string.IsNullOrEmpty(searchKey) || string.IsNullOrWhiteSpace(searchKey))
-            {
-                return View(_productFacadForSite.GetProductForSiteService.Execute(searchKey, catId, page, pageSize).Data);
-            }
+			if (string.IsNullOrEmpty(searchKey) || string.IsNullOrWhiteSpace(searchKey))
+			{
+				return View(_productFacadForSite.GetProductForSiteService.Execute(ordering, searchKey, catId, page, pageSize).Data);
+			}
 			searchKey = searchKey.Trim();
-            return View(_productFacadForSite.GetProductForSiteService.Execute(searchKey, catId, page, pageSize).Data);
-        }
-        
+			return View(_productFacadForSite.GetProductForSiteService.Execute(ordering, searchKey, catId, page, pageSize).Data);
+		}
+
 		public IActionResult Detail(long id)
 		{
 			return View(_productFacadForSite.GetProductDetailForSiteService.Execute(id).Data);

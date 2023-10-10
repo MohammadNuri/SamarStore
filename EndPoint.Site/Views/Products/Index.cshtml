@@ -21,23 +21,22 @@
 			<div class="nav-sort-tabs-res">
 				<ul class="nav sort-tabs-options" id="myTab" role="tablist">
 					<li class="nav-item">
-						<a class="nav-link active" id="Most-visited-tab" data-toggle="tab" href="#Most-visited" role="tab" aria-controls="Most-visited" aria-selected="true">پربازدیدترین</a>
+						<a class="nav-link active" href="~/products?Searchkey=@Context.Request.Query["SearchKey"]&CatId=@Context.Request.Query["CatId"]&ordering=MostVisited" role="tab" aria-controls="Most-visited" aria-selected="true">پربازدیدترین</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" id="Bestselling-tab" data-toggle="tab" href="#Bestselling" role="tab" aria-controls="Bestselling" aria-selected="false">پرفروش&zwnj;ترین&zwnj;</a>
+						<a class="nav-link" href="~/products?Searchkey=@Context.Request.Query["SearchKey"]&CatId=@Context.Request.Query["CatId"]&ordering=Bestselling" role="tab" aria-controls="Bestselling" aria-selected="false">پرفروش&zwnj;ترین&zwnj;</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" id="Most-Popular-tab" data-toggle="tab" href="#Most-Popular" role="tab" aria-controls="Most-Popular" aria-selected="false">محبوب&zwnj;ترین</a>
+						<a class="nav-link" href="~/products?Searchkey=@Context.Request.Query["SearchKey"]&CatId=@Context.Request.Query["CatId"]&ordering=Most-Popular" role="tab" aria-controls="Most-Popular" aria-selected="false">محبوب&zwnj;ترین</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" id="newest-tab" data-toggle="tab" href="#newest" role="tab" aria-controls="newest" aria-selected="false">جدیدترین</a>
+						<a class="nav-link" href="~/products?Searchkey=@Context.Request.Query["SearchKey"]&CatId=@Context.Request.Query["CatId"]&ordering=newest" role="tab" aria-controls="newest" aria-selected="false">جدیدترین</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" id="cheapest-tab" data-toggle="tab" href="#cheapest" role="tab" aria-controls="cheapest" aria-selected="false">ارزان&zwnj;ترین</a>
+						<a class="nav-link" href="~/products?Searchkey=@Context.Request.Query["SearchKey"]&CatId=@Context.Request.Query["CatId"]&ordering=cheapest" role="tab" aria-controls="cheapest" aria-selected="false">ارزان&zwnj;ترین</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" id="most-expensive-tab" data-toggle="tab" href="#most-expensive" role="tab" aria-controls="most-expensive" aria-selected="false">گران&zwnj;ترین</a>
-					</li>
+						<a class="nav-link" href="~/products?Searchkey=@Context.Request.Query["SearchKey"]&CatId=@Context.Request.Query["CatId"]&ordering=most-expensive" role="tab" aria-controls="most-expensive" aria-selected="false">گران&zwnj;ترین</a>
 				</ul>
 			</div>
 		</div>
@@ -86,7 +85,7 @@
 			<nav aria-label="Page navigation example">
 				<paging total-records="@Model.TotalRow"
 						page-no="@pageNumber==0?1:pageNumber"
-						page-size="@pageSize==0?20:pageNumber"
+						page-size="@pageSize==0?20:pageSize"
 						show-prev-next="true"
 						show-total-pages="false"
 						show-total-records="false"
@@ -104,7 +103,9 @@
 </div>
 
 
-@*Pagination Settings for Customize , do it if u like 
+@*Pagination Settings for Customize , do it if u like
+
+
     text-page-size="Items per page:"
     text-total-pages="pages"
     text-total-records="records"
@@ -115,5 +116,17 @@
     sr-text-first="First"
     sr-text-last="Last"
     sr-text-previous="Previous"
-    sr-text-next="Next"*@
+    sr-text-next="Next"
+
+
+    class="row"
+    class-paging-control-div="col"
+    class-info-div="col"
+    class-page-size-div="col"
+    class-paging-control="pagination"
+    class-active-page="disabled"
+    class-disabled-jumping-button="disabled"
+    class-total-pages="badge badge-secondary"
+    class-total-records="badge badge-info"
+	*@
 
