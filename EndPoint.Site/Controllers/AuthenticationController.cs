@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using SamarStore.Application.Services.Users.Commands.UserLogin;
 using EndPoint.Site.Models.AuthenticationViewModel;
+using Microsoft.AspNetCore.Identity;
 
 namespace EndPoint.Site.Controllers
 {
@@ -96,41 +97,77 @@ namespace EndPoint.Site.Controllers
             return Json(signeupResult);
         }
 
-
+        
         public IActionResult Signin(string ReturnUrl = "/")
         {
             ViewBag.url = ReturnUrl;
             return View();
         }
+		[HttpPost]
+		public IActionResult Signin(string Email, string Password, string url = "/")
+		{
+			var signupResult = _userLoginService.Execute(Email, Password);
 
-        [HttpPost]
-        public IActionResult Signin(string Email, string Password, string url = "/")
-        {
-            var signupResult = _userLoginService.Execute(Email, Password);
-            if (signupResult.IsSuccess == true)
-            {
-                var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.NameIdentifier,signupResult.Data.UserId.ToString()),
-                new Claim(ClaimTypes.Email, Email),
-                new Claim(ClaimTypes.Name, signupResult.Data.Name),
-                new Claim(ClaimTypes.Role, signupResult.Data.Roles ),
-            };
-                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var principal = new ClaimsPrincipal(identity);
-                var properties = new AuthenticationProperties()
-                {
-                    IsPersistent = true,
-                    ExpiresUtc = DateTime.Now.AddDays(5),
-                };
-                HttpContext.SignInAsync(principal, properties);
+			if (signupResult.IsSuccess)
+			{
+				var roles = signupResult.Data.Roles;
 
-            }
-            return Json(signupResult);
-        }
+				var claims = new List<Claim>
+		{
+			new Claim(ClaimTypes.NameIdentifier, signupResult.Data.UserId.ToString()),
+			new Claim(ClaimTypes.Email, Email),
+			new Claim(ClaimTypes.Name, signupResult.Data.Name),
+		};
+
+				if (!string.IsNullOrWhiteSpace(roles))
+				{
+					// Split the roles and add them as claims
+					var roleClaims = roles.Split(',').Select(role => new Claim(ClaimTypes.Role, role.Trim()));
+					claims.AddRange(roleClaims);
+				}
+
+				var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+				var principal = new ClaimsPrincipal(identity);
+				var properties = new AuthenticationProperties
+				{
+					IsPersistent = true,
+					ExpiresUtc = DateTime.Now.AddDays(5)
+				};
+
+				HttpContext.SignInAsync(principal, properties);
+			}
+
+			return Json(signupResult);
+		}
+
+		//[HttpPost]
+		//public IActionResult Signin(string Email, string Password, string url = "/")
+		//{
+		//    var signupResult = _userLoginService.Execute(Email, Password);
+		//    if (signupResult.IsSuccess == true)
+		//    {
+		//        var claims = new List<Claim>()
+		//    {
+		//        new Claim(ClaimTypes.NameIdentifier,signupResult.Data.UserId.ToString()),
+		//        new Claim(ClaimTypes.Email, Email),
+		//        new Claim(ClaimTypes.Name, signupResult.Data.Name),
+		//        new Claim(ClaimTypes.Role, signupResult.Data.Roles ),
+		//    };
+		//        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+		//        var principal = new ClaimsPrincipal(identity);
+		//        var properties = new AuthenticationProperties()
+		//        {
+		//            IsPersistent = true,
+		//            ExpiresUtc = DateTime.Now.AddDays(5),
+		//        };
+		//        HttpContext.SignInAsync(principal, properties);
+
+		//    }
+		//    return Json(signupResult);
+		//}
 
 
-        public IActionResult SignOut()
+		public IActionResult SignOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -138,3 +175,4 @@ namespace EndPoint.Site.Controllers
         }
     }
 }
+

@@ -2,7 +2,6 @@
 using SamarStore.Application.Interfaces.FacadPatterns;
 using SamarStore.Application.Services.Products.Commands.AddNewCategory;
 using SamarStore.Application.Services.Products.Queries.GetCategories;
-using Microsoft.AspNetCore.Hosting;
 using SamarStore.Application.Services.Products.Commands.AddNewProduct;
 using SamarStore.Application.Services.Products.Queries.GetAllCategories;
 using SamarStore.Application.Services.Products.Queries.GetProductForAdmin;
@@ -11,7 +10,7 @@ using SamarStore.Application.Services.Products.Commands.RemoveCategory;
 
 namespace SamarStore.Application.Services.Products.FacadPattern
 {
-    public class ProductFacad : IProductFacad
+	public class ProductFacad : IProductFacad
     {
         //--Inject DataBase
         private readonly IDataBaseContext _context;

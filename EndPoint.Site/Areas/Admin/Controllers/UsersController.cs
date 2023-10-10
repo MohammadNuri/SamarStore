@@ -6,11 +6,12 @@ using SamarStore.Application.Services.Users.Commands.RegisterUsers;
 using SamarStore.Application.Services.Users.Queries.GetUsers;
 using SamarStore.Application.Services.Users.Commands.UserStatusChange;
 using SamarStore.Application.Services.Users.Commands.EditUser;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EndPoint.Site.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class UsersController : Controller
+	public class UsersController : Controller
     {
         private readonly IGetUsersService _getUsersService;
         private readonly IGetRolesService _getRolesService;
