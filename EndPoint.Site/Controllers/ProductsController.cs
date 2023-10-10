@@ -15,5 +15,10 @@ namespace EndPoint.Site.Controllers
 		{
 			return View(_productFacadForSite.GetProductForSiteService.Execute(page).Data);
 		}
+
+        public IActionResult Detail(long id)
+        {
+            return View(_productFacadForSite.GetProductDetailForSiteService.Execute(id).Data);
+        }
 	}
 }

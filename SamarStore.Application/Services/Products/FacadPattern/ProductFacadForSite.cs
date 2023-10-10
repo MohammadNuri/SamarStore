@@ -1,5 +1,6 @@
 ﻿using SamarStore.Application.Interfaces.Context;
 using SamarStore.Application.Interfaces.FacadPatterns;
+using SamarStore.Application.Services.Products.Queries.GetProductDetailForSite;
 using SamarStore.Application.Services.Products.Queries.GetProductForSite;
 
 namespace SamarStore.Application.Services.Products.FacadPattern
@@ -22,6 +23,13 @@ namespace SamarStore.Application.Services.Products.FacadPattern
             }
         }
 
-
+        private IGetProductDetailForSiteService _getProductDetailForSiteService;
+        public IGetProductDetailForSiteService GetProductDetailForSiteService
+        {
+	        get
+	        {
+		        return _getProductDetailForSiteService = _getProductDetailForSiteService ?? new GetProductDetailForSiteService(_context);
+			}
+        }
     }
 }
