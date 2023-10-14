@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace EndPoint.Site.Controllers
 {
+
     public class AuthenticationController : Controller
     {
 
@@ -58,7 +59,7 @@ namespace EndPoint.Site.Controllers
             var match = Regex.Match(request.Email, emailRegex, RegexOptions.IgnoreCase);
             if (!match.Success)
             {
-                return Json(new ResultDto { IsSuccess = true, Message = "ایمیل خودرا به درستی وارد نمایید" });
+                return Json(new ResultDto { IsSuccess = true, Message = "ایمیل خود را به درستی وارد نمایید" });
             }
 
 
@@ -97,77 +98,50 @@ namespace EndPoint.Site.Controllers
             return Json(signeupResult);
         }
 
-        
+
         public IActionResult Signin(string ReturnUrl = "/")
         {
             ViewBag.url = ReturnUrl;
             return View();
         }
-		[HttpPost]
-		public IActionResult Signin(string Email, string Password, string url = "/")
-		{
-			var signupResult = _userLoginService.Execute(Email, Password);
+        [HttpPost]
+        public IActionResult Signin(string Email, string Password, string url = "/")
+        {
+            var signupResult = _userLoginService.Execute(Email, Password);
 
-			if (signupResult.IsSuccess)
-			{
-				var roles = signupResult.Data.Roles;
+            if (signupResult.IsSuccess)
+            {
+                var roles = signupResult.Data.Roles;
 
-				var claims = new List<Claim>
-		{
-			new Claim(ClaimTypes.NameIdentifier, signupResult.Data.UserId.ToString()),
-			new Claim(ClaimTypes.Email, Email),
-			new Claim(ClaimTypes.Name, signupResult.Data.Name),
-		};
+                var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, signupResult.Data.UserId.ToString()),
+            new Claim(ClaimTypes.Email, Email),
+            new Claim(ClaimTypes.Name, signupResult.Data.Name),
+        };
 
-				if (!string.IsNullOrWhiteSpace(roles))
-				{
-					// Split the roles and add them as claims
-					var roleClaims = roles.Split(',').Select(role => new Claim(ClaimTypes.Role, role.Trim()));
-					claims.AddRange(roleClaims);
-				}
+                if (!string.IsNullOrWhiteSpace(roles))
+                {
+                    // Split the roles and add them as claims
+                    var roleClaims = roles.Split(',').Select(role => new Claim(ClaimTypes.Role, role.Trim()));
+                    claims.AddRange(roleClaims);
+                }
 
-				var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-				var principal = new ClaimsPrincipal(identity);
-				var properties = new AuthenticationProperties
-				{
-					IsPersistent = true,
-					ExpiresUtc = DateTime.Now.AddDays(5)
-				};
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
+                var properties = new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTime.Now.AddDays(5)
+                };
 
-				HttpContext.SignInAsync(principal, properties);
-			}
+                HttpContext.SignInAsync(principal, properties);
+            }
 
-			return Json(signupResult);
-		}
+            return Json(signupResult);
+        }
 
-		//[HttpPost]
-		//public IActionResult Signin(string Email, string Password, string url = "/")
-		//{
-		//    var signupResult = _userLoginService.Execute(Email, Password);
-		//    if (signupResult.IsSuccess == true)
-		//    {
-		//        var claims = new List<Claim>()
-		//    {
-		//        new Claim(ClaimTypes.NameIdentifier,signupResult.Data.UserId.ToString()),
-		//        new Claim(ClaimTypes.Email, Email),
-		//        new Claim(ClaimTypes.Name, signupResult.Data.Name),
-		//        new Claim(ClaimTypes.Role, signupResult.Data.Roles ),
-		//    };
-		//        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-		//        var principal = new ClaimsPrincipal(identity);
-		//        var properties = new AuthenticationProperties()
-		//        {
-		//            IsPersistent = true,
-		//            ExpiresUtc = DateTime.Now.AddDays(5),
-		//        };
-		//        HttpContext.SignInAsync(principal, properties);
-
-		//    }
-		//    return Json(signupResult);
-		//}
-
-
-		public IActionResult SignOut()
+        public IActionResult CustomSignOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 

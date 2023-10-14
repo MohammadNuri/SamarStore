@@ -2,11 +2,10 @@
 using SamarStore.Common;
 using SamarStore.Common.Dto;
 using SamarStore.Domain.Entities.Users;
-using System.Net.Http.Headers;
 
 namespace SamarStore.Application.Services.Users.Commands.RegisterUsers
 {
-    public class RegisterUserService : IRegisterUserService
+	public class RegisterUserService : IRegisterUserService
     {
         private readonly IDataBaseContext _context;
         public RegisterUserService(IDataBaseContext context)
@@ -80,6 +79,7 @@ namespace SamarStore.Application.Services.Users.Commands.RegisterUsers
                 foreach (var item in request.Roles)
                 {
                     var roles = _context.Roles.Find(item.Id);
+                    if(roles != null)
                     userInRoles.Add(new UserInRole
                     {
                         Role = roles,

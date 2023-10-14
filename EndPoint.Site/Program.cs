@@ -11,11 +11,14 @@ using SamarStore.Application.Services.Users.Commands.UserLogin;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SamarStore.Application.Interfaces.FacadPatterns;
 using SamarStore.Application.Services.Products.FacadPattern;
+using EndPoint.Site.CustomFilter;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
+
 //--UserServices
 builder.Services.AddScoped<IGetUsersService, GetUsersService>();
 builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
@@ -50,6 +53,8 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
 });
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -60,15 +65,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
-
-app.UseAuthentication();    
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",
@@ -77,5 +81,6 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

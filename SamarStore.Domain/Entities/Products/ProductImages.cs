@@ -11,6 +11,6 @@ namespace SamarStore.Domain.Entities.Products
     {
         public virtual Product Product { get; set; } // Ertebat Chand be 1 ba Product 
         public long ProductId { get; set; }
-        public string Src { get; set; }
+        public string Src { get; set; } = string.Empty; 
     }
 }

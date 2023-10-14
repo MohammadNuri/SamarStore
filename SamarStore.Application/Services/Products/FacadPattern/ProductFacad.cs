@@ -12,9 +12,9 @@ namespace SamarStore.Application.Services.Products.FacadPattern
 {
 	public class ProductFacad : IProductFacad
     {
-        //--Inject DataBase
-        private readonly IDataBaseContext _context;
-        public ProductFacad(IDataBaseContext context)
+		//--Inject DataBase
+		private readonly IDataBaseContext _context;
+		public ProductFacad(IDataBaseContext context)
         {
             _context = context;
         }

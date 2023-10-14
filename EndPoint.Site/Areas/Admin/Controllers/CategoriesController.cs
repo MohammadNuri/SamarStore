@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using EndPoint.Site.CustomFilter;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SamarStore.Application.Interfaces.FacadPatterns;
 
 namespace EndPoint.Site.Areas.Admin.Controllers
 {
     [Area("Admin")]
-	public class CategoriesController : Controller
+    public class CategoriesController : Controller
     {
         private readonly IProductFacad _productFacad;
         public CategoriesController(IProductFacad productFacad)

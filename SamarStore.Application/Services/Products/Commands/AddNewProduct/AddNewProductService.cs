@@ -21,6 +21,14 @@ public class AddNewProductService : IAddNewProductService
         {
 
             var category = _context.Categories.Find(request.CategoryId);
+            if (category == null)
+            {
+                return new ResultDto
+                {
+                    IsSuccess = false,
+                    Message = "دسته بندی پیدا نشد",
+                };
+            }
 
             Product product = new Product()
             {
@@ -81,7 +89,7 @@ public class AddNewProductService : IAddNewProductService
                 Message = "محصول با موفقیت به محصولات فروشگاه اضافه شد",
             };
         }
-        catch (Exception ex)
+        catch (Exception)
         {
 
             return new ResultDto
@@ -136,7 +144,11 @@ public class AddNewProductService : IAddNewProductService
             };
         }
 
-        return null;
+        return new UploadDto
+        {
+            FileNameAddress = "",
+            Status = false
+        };
     }
 }
 

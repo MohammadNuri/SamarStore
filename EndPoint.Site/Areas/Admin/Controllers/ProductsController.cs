@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using EndPoint.Site.CustomFilter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SamarStore.Application.Interfaces.FacadPatterns;
@@ -7,7 +7,7 @@ using SamarStore.Application.Services.Products.Commands.AddNewProduct;
 namespace EndPoint.Site.Areas.Admin.Controllers
 {
     [Area("Admin")]
-	public class ProductsController : Controller
+    public class ProductsController : Controller
     {
 
         private readonly IProductFacad _productFacad;

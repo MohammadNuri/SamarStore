@@ -28,8 +28,6 @@ namespace SamarStore.Application.Services.Users.Commands.UserLogin
                 };
             }
 
-
-
             var user = _context.Users
                 .Include(p => p.UserInRoles)
                 .ThenInclude(p => p.Role)
@@ -66,14 +64,15 @@ namespace SamarStore.Application.Services.Users.Commands.UserLogin
             }
 
 
-            var roles = "";
-            foreach (var item in user.UserInRoles)
-            {
-                roles += $"{item.Role.Name}";
-            }
+			var roles = string.Join(", ", user.UserInRoles.Select(item => item.Role.Name));
+			//var roles = "";
+			//foreach (var item in user.UserInRoles)
+			//{
+			//    roles += $"{item.Role.Name}";
+			//}
 
 
-            return new ResultDto<ResultUserLoginDto>()
+			return new ResultDto<ResultUserLoginDto>()
             {
                 Data = new ResultUserLoginDto()
                 {
