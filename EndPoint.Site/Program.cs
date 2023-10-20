@@ -11,8 +11,7 @@ using SamarStore.Application.Services.Users.Commands.UserLogin;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SamarStore.Application.Interfaces.FacadPatterns;
 using SamarStore.Application.Services.Products.FacadPattern;
-using EndPoint.Site.CustomFilter;
-using Microsoft.AspNetCore.Authorization;
+using SamarStore.Application.Services.HomePage.FacadPattern;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +29,7 @@ builder.Services.AddScoped<IUserLoginService, UserLoginService>();
 //--FacadInject
 builder.Services.AddScoped<IProductFacad, ProductFacad>();
 builder.Services.AddScoped<IProductFacadForSite, ProductFacadForSite>();
+builder.Services.AddScoped<IHomePageFacad, HomePageFacad>();
 
 
 builder.Services.AddControllersWithViews();

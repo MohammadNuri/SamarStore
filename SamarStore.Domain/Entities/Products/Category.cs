@@ -14,7 +14,7 @@ namespace SamarStore.Domain.Entities.Products
         public long? ParentCategoryId { get; set; }
 
         //for showing SubCategory of Categories 
-        public virtual ICollection<Category> SubCategories { get; set; }
+        public virtual ICollection<Category> SubCategories { get; set; } 
         
     }
 }

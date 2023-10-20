@@ -1,5 +1,4 @@
-﻿using EndPoint.Site.CustomFilter;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SamarStore.Application.Interfaces.FacadPatterns;
 using SamarStore.Application.Services.Products.Commands.AddNewProduct;

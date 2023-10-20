@@ -4,9 +4,9 @@ namespace SamarStore.Application.Services.Products.Commands.AddNewProduct;
 
 public class RequestAddNewProductDto
 {
-    public string Name { get; set; }
-    public string Brand { get; set; }
-    public string Description { get; set; }
+    public string Name { get; set; } = string.Empty;    
+    public string Brand { get; set; } = string.Empty;   
+    public string Description { get; set; } = string.Empty; 
     public int Price { get; set; }
     public int Inventory { get; set; }
     public long CategoryId { get; set; }

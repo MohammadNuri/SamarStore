@@ -3,5 +3,5 @@
 public class ProductDetailImagesDto
 {
     public long Id { get; set; }
-    public string Src { get; set; }
+    public string Src { get; set; } = string.Empty; 
 }

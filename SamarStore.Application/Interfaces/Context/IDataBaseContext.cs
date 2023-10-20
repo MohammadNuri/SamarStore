@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SamarStore.Domain.Entities.HomePage;
 using SamarStore.Domain.Entities.Products;
 using SamarStore.Domain.Entities.Users;
 using System;
@@ -18,6 +19,8 @@ namespace SamarStore.Application.Interfaces.Context
         DbSet<Product> Products { get; set; }
         DbSet<ProductImages> ProductImages { get; set; }
         DbSet<ProductFeatures> ProductFeatures { get; set; }
+        DbSet<Slider> Slider { get; set; }
+        DbSet<HomePageImages> HomePageImages { get; set; }
 
         int SaveChanges(bool acceptAllChangesOnSuccess);
         int SaveChanges();

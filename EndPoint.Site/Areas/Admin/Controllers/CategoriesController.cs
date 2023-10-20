@@ -1,5 +1,4 @@
-﻿using EndPoint.Site.CustomFilter;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SamarStore.Application.Interfaces.FacadPatterns;
 

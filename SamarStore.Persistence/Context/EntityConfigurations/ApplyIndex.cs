@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SamarStore.Application.Services.Common.Queries.GetSlider;
 using SamarStore.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;

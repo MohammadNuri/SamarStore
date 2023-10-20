@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SamarStore.Application.Interfaces.Context;
 using SamarStore.Common.Roles;
+using SamarStore.Domain.Entities.HomePage;
 using SamarStore.Domain.Entities.Products;
 using SamarStore.Domain.Entities.Users;
 using SamarStore.Persistence.Context.EntityConfigurations;
@@ -19,6 +20,11 @@ namespace SamarStore.Persistence.Context
         public DbSet<ProductImages> ProductImages { get; set; }
         public DbSet<ProductFeatures> ProductFeatures { get; set; }
         public DbSet<UserInRole> UserInRoles { get; set; }  
+        public DbSet<Slider> Slider { get; set; }  
+        public DbSet<HomePageImages> HomePageImages { get; set; }  
+
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

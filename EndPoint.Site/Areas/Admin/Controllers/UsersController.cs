@@ -6,7 +6,6 @@ using SamarStore.Application.Services.Users.Commands.RegisterUsers;
 using SamarStore.Application.Services.Users.Queries.GetUsers;
 using SamarStore.Application.Services.Users.Commands.UserStatusChange;
 using SamarStore.Application.Services.Users.Commands.EditUser;
-using EndPoint.Site.CustomFilter;
 
 namespace EndPoint.Site.Areas.Admin.Controllers
 {
