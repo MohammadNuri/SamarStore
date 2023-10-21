@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using SamarStore.Application.Interfaces.FacadPatterns;
 using SamarStore.Application.Services.Products.FacadPattern;
 using SamarStore.Application.Services.HomePage.FacadPattern;
+using SamarStore.Application.Services.Carts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,8 @@ builder.Services.AddScoped<IUserLoginService, UserLoginService>();
 builder.Services.AddScoped<IProductFacad, ProductFacad>();
 builder.Services.AddScoped<IProductFacadForSite, ProductFacadForSite>();
 builder.Services.AddScoped<IHomePageFacad, HomePageFacad>();
+//--CartServices
+builder.Services.AddScoped<ICartService, CartService>();
 
 
 builder.Services.AddControllersWithViews();

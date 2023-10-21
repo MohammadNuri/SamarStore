@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SamarStore.Persistence.Context;
 
@@ -11,9 +12,11 @@ using SamarStore.Persistence.Context;
 namespace SamarStore.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231021082757__cart_cartItem")]
+    partial class _cart_cartItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,9 +35,6 @@ namespace SamarStore.Persistence.Migrations
 
                     b.Property<Guid>("BrowserId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Finished")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("InsertTime")
                         .HasColumnType("datetime2");
@@ -66,9 +66,6 @@ namespace SamarStore.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CartId")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
@@ -91,8 +88,6 @@ namespace SamarStore.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId");
 
                     b.HasIndex("ProductId");
 
@@ -362,21 +357,21 @@ namespace SamarStore.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            InsertTime = new DateTime(2023, 10, 21, 13, 35, 3, 486, DateTimeKind.Local).AddTicks(600),
+                            InsertTime = new DateTime(2023, 10, 21, 11, 57, 57, 96, DateTimeKind.Local).AddTicks(3844),
                             IsRemoved = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            InsertTime = new DateTime(2023, 10, 21, 13, 35, 3, 486, DateTimeKind.Local).AddTicks(657),
+                            InsertTime = new DateTime(2023, 10, 21, 11, 57, 57, 96, DateTimeKind.Local).AddTicks(3936),
                             IsRemoved = false,
                             Name = "Operator"
                         },
                         new
                         {
                             Id = 3L,
-                            InsertTime = new DateTime(2023, 10, 21, 13, 35, 3, 486, DateTimeKind.Local).AddTicks(668),
+                            InsertTime = new DateTime(2023, 10, 21, 11, 57, 57, 96, DateTimeKind.Local).AddTicks(3948),
                             IsRemoved = false,
                             Name = "Customer"
                         });
@@ -471,19 +466,11 @@ namespace SamarStore.Persistence.Migrations
 
             modelBuilder.Entity("SamarStore.Domain.Entities.Carts.CartItem", b =>
                 {
-                    b.HasOne("SamarStore.Domain.Entities.Carts.Cart", "Cart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SamarStore.Domain.Entities.Products.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cart");
 
                     b.Navigation("Product");
                 });
@@ -547,11 +534,6 @@ namespace SamarStore.Persistence.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SamarStore.Domain.Entities.Carts.Cart", b =>
-                {
-                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("SamarStore.Domain.Entities.Products.Category", b =>

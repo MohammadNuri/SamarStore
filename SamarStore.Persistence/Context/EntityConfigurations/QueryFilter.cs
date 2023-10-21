@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SamarStore.Domain.Entities.Carts;
 using SamarStore.Domain.Entities.HomePage;
 using SamarStore.Domain.Entities.Products;
 using SamarStore.Domain.Entities.Users;
@@ -23,8 +24,8 @@ namespace SamarStore.Persistence.Context.EntityConfigurations
             modelBuilder.Entity<ProductFeatures>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<Slider>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<HomePageImages>().HasQueryFilter(p => !p.IsRemoved);
-
-
+            modelBuilder.Entity<Cart>().HasQueryFilter(p => !p.IsRemoved);
+            modelBuilder.Entity<CartItem>().HasQueryFilter(p => !p.IsRemoved);
         }
     }
 }
