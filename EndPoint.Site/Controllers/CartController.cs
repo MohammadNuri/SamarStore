@@ -8,11 +8,11 @@ namespace EndPoint.Site.Controllers
     public class CartController : Controller
     {
         private readonly ICartService _cartService;
-        private readonly CookiesManeger cookiesManeger;
+        private readonly CookiesManager cookiesManeger;
         public CartController(ICartService cartService)
         {
             _cartService = cartService; 
-            cookiesManeger = new CookiesManeger();
+            cookiesManeger = new CookiesManager();
         }
 
         public IActionResult Index()

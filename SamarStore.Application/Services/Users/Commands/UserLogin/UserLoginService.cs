@@ -65,6 +65,7 @@ namespace SamarStore.Application.Services.Users.Commands.UserLogin
 
 
 			var roles = string.Join(", ", user.UserInRoles.Select(item => item.Role.Name));
+
 			//var roles = "";
 			//foreach (var item in user.UserInRoles)
 			//{

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SamarStore.Domain.Entities.Carts;
+using SamarStore.Domain.Entities.Finances;
 using SamarStore.Domain.Entities.HomePage;
 using SamarStore.Domain.Entities.Products;
 using SamarStore.Domain.Entities.Users;
@@ -24,6 +25,7 @@ namespace SamarStore.Application.Interfaces.Context
         DbSet<HomePageImages> HomePageImages { get; set; }
         DbSet<Cart> Carts { get; set; }
         DbSet<CartItem> CartItems { get; set; }
+        DbSet<RequestPay> RequestPay { get; set; }
 
         int SaveChanges(bool acceptAllChangesOnSuccess);
         int SaveChanges();

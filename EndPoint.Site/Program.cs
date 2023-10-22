@@ -13,6 +13,8 @@ using SamarStore.Application.Interfaces.FacadPatterns;
 using SamarStore.Application.Services.Products.FacadPattern;
 using SamarStore.Application.Services.HomePage.FacadPattern;
 using SamarStore.Application.Services.Carts;
+using SamarStore.Application.Services.Finances.FacadPattern;
+using SamarStore.Common.Roles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,10 +29,12 @@ builder.Services.AddScoped<IRemoveUserService, RemoveUserService>();
 builder.Services.AddScoped<IUserStatusChangeService, UserStatusChangeService>(); 
 builder.Services.AddScoped<IEditUserService , EditUserService>();   
 builder.Services.AddScoped<IUserLoginService, UserLoginService>();  
-//--FacadInject
+//--FacadInjections
 builder.Services.AddScoped<IProductFacad, ProductFacad>();
 builder.Services.AddScoped<IProductFacadForSite, ProductFacadForSite>();
 builder.Services.AddScoped<IHomePageFacad, HomePageFacad>();
+builder.Services.AddScoped<IFinancesFacad, FinancesFacad>();
+
 //--CartServices
 builder.Services.AddScoped<ICartService, CartService>();
 
@@ -47,13 +51,15 @@ builder.Services.AddAuthentication(options =>
         options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     }).AddCookie(options =>
     {
-        options.LoginPath = new PathString("/");
+        options.LoginPath = new PathString("/authentication/signin");
         options.ExpireTimeSpan = TimeSpan.FromMinutes(5.0);
     });
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+    options.AddPolicy(UserRoles.Admin, policy => policy.RequireRole(UserRoles.Admin));
+    options.AddPolicy(UserRoles.Customer, policy => policy.RequireRole(UserRoles.Customer));
+    options.AddPolicy(UserRoles.Operator, policy => policy.RequireRole(UserRoles.Operator));
 });
 
 
@@ -76,6 +82,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

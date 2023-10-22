@@ -2,6 +2,7 @@
 using SamarStore.Application.Interfaces.Context;
 using SamarStore.Common.Roles;
 using SamarStore.Domain.Entities.Carts;
+using SamarStore.Domain.Entities.Finances;
 using SamarStore.Domain.Entities.HomePage;
 using SamarStore.Domain.Entities.Products;
 using SamarStore.Domain.Entities.Users;
@@ -25,6 +26,7 @@ namespace SamarStore.Persistence.Context
         public DbSet<HomePageImages> HomePageImages { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<RequestPay> RequestPay { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,6 +1,6 @@
 ﻿namespace EndPoint.Site.Utilities
 {
-    public class CookiesManeger
+    public class CookiesManager
     {
         public void Add(HttpContext context, string token, string value)
         {
