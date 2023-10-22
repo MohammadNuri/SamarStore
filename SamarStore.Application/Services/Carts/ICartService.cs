@@ -10,10 +10,8 @@ namespace SamarStore.Application.Services.Carts
         ResultDto AddToCart(long ProductId, Guid BrowserId);
         ResultDto RemoveFromCart(long ProductId, Guid BrowserId);
         ResultDto<CartDto> GetCarts(Guid BrowserId, long? UserId);
-
         ResultDto Add(long CartItemId);
         ResultDto LowOff(long CartItemId);
-        ResultDto DecrementCartItemCount(long ProductId, Guid BrowserId);
     }
 
 
@@ -126,9 +124,13 @@ namespace SamarStore.Application.Services.Carts
 
             if (cartItem.Count <= 1)
             {
-                return new ResultDto()
+                cartItem.IsRemoved = true;
+                cartItem.RemoveTime = DateTime.Now;
+                _context.SaveChanges();
+                return new ResultDto
                 {
-                    IsSuccess = false,
+                    IsSuccess = true,
+                    Message = "محصول از سبد خرید شما حذف شد"
                 };
             }
 
@@ -166,54 +168,54 @@ namespace SamarStore.Application.Services.Carts
             }
         }
 
-        public ResultDto DecrementCartItemCount(long ProductId, Guid BrowserId)
-        {
-            var cart = _context.Carts
-                .Include(c => c.CartItems)
-                .Where(p => p.BrowserId == BrowserId && p.Finished == false)
-                .FirstOrDefault();
+        //public ResultDto DecrementCartItemCount(long ProductId, Guid BrowserId)
+        //{
+        //    var cart = _context.Carts
+        //        .Include(c => c.CartItems)
+        //        .Where(p => p.BrowserId == BrowserId && p.Finished == false)
+        //        .FirstOrDefault();
 
-            if (cart != null)
-            {
-                var cartItem = _context.CartItems.Where(p => p.ProductId == ProductId && p.CartId == cart.Id).FirstOrDefault();
+        //    if (cart != null)
+        //    {
+        //        var cartItem = _context.CartItems.Where(p => p.ProductId == ProductId && p.CartId == cart.Id).FirstOrDefault();
 
-                var product = _context.Products.Find(ProductId);
+        //        var product = _context.Products.Find(ProductId);
 
-                if (cartItem != null)
-                {
-                    if (cartItem.Count > 1)
-                    {
-                        cartItem.Count--;
-                        _context.SaveChanges();
+        //        if (cartItem != null)
+        //        {
+        //            if (cartItem.Count > 1)
+        //            {
+        //                cartItem.Count--;
+        //                _context.SaveChanges();
 
-                        return new ResultDto
-                        {
-                            IsSuccess = true,
-                            Message = $"تعداد محصول {cartItem.Product.Name} در سبد خرید کاهش یافت"
-                        };
-                    }
-                    else
-                    {
-                        // If the count is 1, remove the product from the cart
-                        cartItem.IsRemoved = true;
-                        cartItem.RemoveTime = DateTime.Now;
-                        _context.SaveChanges();
+        //                return new ResultDto
+        //                {
+        //                    IsSuccess = true,
+        //                    Message = $"تعداد محصول {cartItem.Product.Name} در سبد خرید کاهش یافت"
+        //                };
+        //            }
+        //            else
+        //            {
+        //                // If the count is 1, remove the product from the cart
+        //                cartItem.IsRemoved = true;
+        //                cartItem.RemoveTime = DateTime.Now;
+        //                _context.SaveChanges();
 
-                        return new ResultDto
-                        {
-                            IsSuccess = true,
-                            Message = $"محصول {cartItem.Product.Name} از سبد خرید حذف شد"
-                        };
-                    }
-                }
-            }
+        //                return new ResultDto
+        //                {
+        //                    IsSuccess = true,
+        //                    Message = $"محصول {cartItem.Product.Name} از سبد خرید حذف شد"
+        //                };
+        //            }
+        //        }
+        //    }
 
-            return new ResultDto
-            {
-                IsSuccess = false,
-                Message = "محصول یافت نشد"
-            };
-        }
+        //    return new ResultDto
+        //    {
+        //        IsSuccess = false,
+        //        Message = "محصول یافت نشد"
+        //    };
+        //}
     }
 
 
@@ -232,4 +234,5 @@ namespace SamarStore.Application.Services.Carts
         public int Count { get; set; }
         public int Price { get; set; }
     }
+
 }

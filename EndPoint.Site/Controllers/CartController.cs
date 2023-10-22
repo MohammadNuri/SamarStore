@@ -49,11 +49,20 @@ namespace EndPoint.Site.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult LowOff(long CartItemId)
+        public IActionResult LowOff(long CartItemId, string returnUrl)
         {
 
             _cartService.LowOff(CartItemId);
-            return RedirectToAction("Index");
+
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                // Redirect the user back to the returnUrl
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         public IActionResult Remove(long ProductId, string returnUrl)
@@ -70,21 +79,21 @@ namespace EndPoint.Site.Controllers
             }
         }
 
-        public IActionResult DecrementCartItemCount(long ProductId, string returnUrl)
-        {
+        //public IActionResult DecrementCartItemCount(long ProductId, string returnUrl)
+        //{
 
-            _cartService.DecrementCartItemCount(ProductId, cookiesManeger.GetBrowserId(HttpContext));
+        //    _cartService.DecrementCartItemCount(ProductId, cookiesManeger.GetBrowserId(HttpContext));
 
-            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-            {
-                // Redirect the user back to the returnUrl
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
-        }
+        //    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+        //    {
+        //        // Redirect the user back to the returnUrl
+        //        return Redirect(returnUrl);
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+        //}
 
 
         

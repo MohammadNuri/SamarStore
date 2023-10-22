@@ -37,11 +37,11 @@
                                     <img src="~/@item.Image">
                                 </a>
                                 <span class="product-name-card">@item.Product</span>
-                                <p></p>  
-                                <div class="mini-card-button">
+                                <p></p>
 
-                                    <a href="~/cart/decrementcartitemcount?ProductId=@item.Id&returnUrl=@returnUrl" class="view-card">X</a>
-                                </div>
+
+                                <div class="quantity-button quantity-down" onclick="lowCount('@item.Id','@returnUrl')">-</div>
+
                                 <div class="quantity">
                                     <span class="quantity-Price-amount">
                                         @item.Price.ToString("n0")
@@ -68,3 +68,5 @@
     </div>
 </div>
 
+
+<script src="~/js/cart.js"></script>
